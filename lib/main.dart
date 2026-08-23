@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'blocs/watchlist/watchlist_bloc.dart';
 import 'constants/app_colors.dart';
 import 'screens/watchlist_page.dart';
+import 'services/price_feed.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +20,8 @@ class Trade021App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // initialize price feed early so notifiers exist before widgets build
+    PriceFeed.instance.setTickRate(2);
     return BlocProvider(
       create: (_) => WatchlistBloc(),
       child: MaterialApp(

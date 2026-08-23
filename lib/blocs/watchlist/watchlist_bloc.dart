@@ -5,6 +5,7 @@ import '../../models/index_ticker.dart';
 import '../../models/stock_item.dart';
 import '../../models/watchlist_model.dart';
 import '../../repository/watchlist_data_source.dart';
+import '../../services/persistence_service.dart';
 
 part 'watchlist_event.dart';
 part 'watchlist_state.dart';
@@ -20,25 +21,33 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     on<SaveWatchlistEdits>(_handleSave);
   }
 
-  void _handleFetch(FetchWatchlistData event, Emitter<WatchlistState> emit) {
-    // TODO: replace with actual API call when backend is ready
-    final watchlists = WatchlistDataSource.defaultWatchlists;
+  Future<void> _handleFetch(
+      FetchWatchlistData event, Emitter<WatchlistState> emit) async {
     final indices = WatchlistDataSource.headerIndices;
-
-    emit(WatchlistReadyState(
-      allWatchlists: watchlists,
-      indices: indices,
-      activeTab: 0,
-    ));
+    try {
+      final persisted = await PersistenceService.instance.loadWatchlists();
+      final watchlists = persisted ?? WatchlistDataSource.defaultWatchlists;
+      emit(WatchlistReadyState(
+        allWatchlists: watchlists,
+        indices: indices,
+        activeTab: 0,
+      ));
+    } catch (e) {
+      final watchlists = WatchlistDataSource.defaultWatchlists;
+      emit(WatchlistReadyState(
+          allWatchlists: watchlists, indices: indices, activeTab: 0));
+    }
   }
 
-  void _handleTabSwitch(SwitchWatchlistTab event, Emitter<WatchlistState> emit) {
+  void _handleTabSwitch(
+      SwitchWatchlistTab event, Emitter<WatchlistState> emit) {
     if (state is! WatchlistReadyState) return;
     final curr = state as WatchlistReadyState;
     emit(curr.copyWith(activeTab: event.index));
   }
 
-  void _handleEditStart(StartEditingWatchlist event, Emitter<WatchlistState> emit) {
+  void _handleEditStart(
+      StartEditingWatchlist event, Emitter<WatchlistState> emit) {
     if (state is! WatchlistReadyState) return;
     final curr = state as WatchlistReadyState;
 
@@ -53,7 +62,8 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     ));
   }
 
-  void _handleEditCancel(CancelWatchlistEdit event, Emitter<WatchlistState> emit) {
+  void _handleEditCancel(
+      CancelWatchlistEdit event, Emitter<WatchlistState> emit) {
     if (state is! WatchlistEditingState) return;
     final curr = state as WatchlistEditingState;
 
@@ -86,7 +96,8 @@ class WatchlistBloc extends Bloc<WatchlistEvent, WatchlistState> {
     if (state is! WatchlistEditingState) return;
     final curr = state as WatchlistEditingState;
 
-    final updated = curr.pendingItems.where((s) => s.uid != event.stockUid).toList();
+    final updated =
+        curr.pendingItems.where((s) => s.uid != event.stockUid).toList();
     emit(curr.copyWith(pendingItems: updated));
   }
 
