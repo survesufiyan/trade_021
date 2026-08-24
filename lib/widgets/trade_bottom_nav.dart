@@ -21,12 +21,19 @@ class TradeBottomNav extends StatelessWidget {
         selectedFontSize: 10,
         unselectedFontSize: 10,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.bookmark_border_rounded), label: 'Watchlist'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart_outlined), label: 'Orders'),
-          BottomNavigationBarItem(icon: Icon(Icons.flash_on_rounded), label: 'GTT+'),
-          BottomNavigationBarItem(icon: Icon(Icons.work_outline_rounded), label: 'Portfolio'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_balance_wallet_outlined), label: 'Funds'),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline_rounded), label: 'Profile'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark_border_rounded), label: 'Watchlist'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart_outlined), label: 'Orders'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.flash_on_rounded), label: 'GTT+'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.work_outline_rounded), label: 'Portfolio'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.account_balance_wallet_outlined),
+              label: 'Funds'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline_rounded), label: 'Profile'),
         ],
       ),
     );

@@ -93,5 +93,6 @@ class StockItem extends Equatable {
   }
 
   @override
-  List<Object?> get props => [uid, tickerName, exchange, segment, ltp, dayChange, dayChangePct];
+  List<Object?> get props =>
+      [uid, tickerName, exchange, segment, ltp, dayChange, dayChangePct];
 }

@@ -46,8 +46,8 @@ class PriceFeed {
 
   void _startTimer() {
     _timer?.cancel();
-    final periodMs = 200; // tick driver period
-    _timer = Timer.periodic(Duration(milliseconds: periodMs),
+    const periodMs = 200; // tick driver period
+    _timer = Timer.periodic(const Duration(milliseconds: periodMs),
         (_) => _onDriverTick(periodMs / 1000.0));
   }
 
@@ -58,11 +58,11 @@ class PriceFeed {
   void _onDriverTick(double dtSeconds) {
     final prob =
         ticksPerSec * dtSeconds; // expected updates per stock this tick
-    _prices.keys.forEach((sym) {
+    for (final sym in _prices.keys) {
       if (_rng.nextDouble() <= prob) {
         _doUpdate(sym);
       }
-    });
+    }
   }
 
   void _doUpdate(String sym) {
@@ -78,11 +78,15 @@ class PriceFeed {
 
   ValueNotifier<PriceTick>? notifierFor(String symbol) => _notifiers[symbol];
 
+  PriceTick current(String symbol) => _notifiers[symbol]!.value;
+
   List<String> get symbols => _notifiers.keys.toList(growable: false);
 
   void dispose() {
     _timer?.cancel();
-    _notifiers.values.forEach((n) => n.dispose());
+    for (final notifier in _notifiers.values) {
+      notifier.dispose();
+    }
     _notifiers.clear();
   }
 }

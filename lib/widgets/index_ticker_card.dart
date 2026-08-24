@@ -15,8 +15,10 @@ class IndexTickerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chgColor = data.isUp ? AppColors.gain : AppColors.loss;
-    final signedPct = '${data.chgPct >= 0 ? '' : ''}${data.chgPct.toStringAsFixed(2)}...';
-    final signedChg = '${data.chg >= 0 ? '' : ''}${data.chg.toStringAsFixed(2)}';
+    final signedPct =
+        '${data.chgPct >= 0 ? '' : ''}${data.chgPct.toStringAsFixed(2)}...';
+    final signedChg =
+        '${data.chg >= 0 ? '' : ''}${data.chg.toStringAsFixed(2)}';
 
     return Row(
       children: [

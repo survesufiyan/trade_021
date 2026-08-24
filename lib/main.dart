@@ -1,47 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'blocs/watchlist/watchlist_bloc.dart';
 import 'constants/app_colors.dart';
-import 'screens/watchlist_page.dart';
+import 'screens/home_shell.dart';
 import 'services/price_feed.dart';
+import 'services/trading_state.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
-  );
+  PriceFeed.instance.setTickRate(2);
+  TradingState.instance.load();
   runApp(const Trade021App());
 }
 
 class Trade021App extends StatelessWidget {
   const Trade021App({super.key});
-
   @override
-  Widget build(BuildContext context) {
-    // initialize price feed early so notifiers exist before widgets build
-    PriceFeed.instance.setTickRate(2);
-    return BlocProvider(
-      create: (_) => WatchlistBloc(),
-      child: MaterialApp(
-        title: '021 Trade',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
+  Widget build(BuildContext context) => MaterialApp(
+      title: 'Trade 021',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
           useMaterial3: true,
-          fontFamily: 'Roboto',
-          scaffoldBackgroundColor: AppColors.white,
+          scaffoldBackgroundColor: Colors.white,
           colorScheme: ColorScheme.fromSeed(seedColor: AppColors.brand),
           appBarTheme: const AppBarTheme(
-            backgroundColor: AppColors.white,
-            foregroundColor: AppColors.textDark,
-            elevation: 0,
-            surfaceTintColor: Colors.transparent,
-          ),
-          dividerColor: AppColors.strokeLight,
-        ),
-        home: const WatchlistPage(),
-      ),
-    );
-  }
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.transparent)),
+      home: const HomeShell());
 }
