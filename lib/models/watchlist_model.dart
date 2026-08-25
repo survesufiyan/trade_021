@@ -12,7 +12,8 @@ class WatchlistModel extends Equatable {
     required this.items,
   });
 
-  WatchlistModel copyWith({String? wlId, String? title, List<StockItem>? items}) {
+  WatchlistModel copyWith(
+      {String? wlId, String? title, List<StockItem>? items}) {
     return WatchlistModel(
       wlId: wlId ?? this.wlId,
       title: title ?? this.title,

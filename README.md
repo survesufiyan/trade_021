@@ -2,6 +2,17 @@
 
 A production-grade Flutter trading watchlist app demonstrating **BLoC architecture**, drag-to-reorder, and clean project structure.
 
+## Assignment Walkthrough
+
+Watch the short end-to-end demonstration of watchlist management, live market
+prices, simulated order placement, holdings with live P&L, and persistent order
+history:
+
+▶️ **[Watch the assignment walkthrough video](assignment_walkthrough.mp4)**
+
+> If GitHub downloads the file instead of playing it in the browser, open the
+> downloaded MP4 with any standard video player.
+
 ---
 
 ## Features

@@ -12,6 +12,8 @@ class PersistenceService {
 
   static const _kWatchlists = 'watchlists_v1';
   static const _kHoldings = 'holdings_v1';
+  static const _kWallet = 'wallet_paise_v1';
+  static const _kOrders = 'orders_v1';
 
   Future<void> saveWatchlists(List<WatchlistModel> lists) async {
     final prefs = await SharedPreferences.getInstance();
@@ -61,6 +63,32 @@ class PersistenceService {
       return decoded
           .map((j) => Holding.fromJson(j as Map<String, dynamic>))
           .toList();
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<void> saveWallet(int paise) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(_kWallet, paise);
+  }
+
+  Future<int> loadWallet() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_kWallet) ?? 10000000;
+  }
+
+  Future<void> saveOrders(List<Map<String, dynamic>> orders) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_kOrders, jsonEncode(orders));
+  }
+
+  Future<List<Map<String, dynamic>>> loadOrders() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_kOrders);
+    if (raw == null) return [];
+    try {
+      return (jsonDecode(raw) as List).cast<Map<String, dynamic>>();
     } catch (_) {
       return [];
     }

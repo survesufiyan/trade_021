@@ -1,5 +1,4 @@
 import '../models/index_ticker.dart';
-import '../models/stock_item.dart';
 import '../models/watchlist_model.dart';
 import '../data/master_stocks.dart';
 

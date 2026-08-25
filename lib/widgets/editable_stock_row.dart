@@ -29,18 +29,21 @@ class EditableStockRow extends StatelessWidget {
                 index: listIndex,
                 child: const Padding(
                   padding: EdgeInsets.only(right: 14),
-                  child: Icon(Icons.drag_handle_rounded, color: AppColors.handleGrey, size: 22),
+                  child: Icon(Icons.drag_handle_rounded,
+                      color: AppColors.handleGrey, size: 22),
                 ),
               ),
               Expanded(
-                child: Text(stock.tickerName, style: AppTextStyles.editStockName),
+                child:
+                    Text(stock.tickerName, style: AppTextStyles.editStockName),
               ),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
                 onTap: onRemove,
                 child: const Padding(
                   padding: EdgeInsets.only(left: 8),
-                  child: Icon(Icons.delete_outline_rounded, color: AppColors.textDark, size: 21),
+                  child: Icon(Icons.delete_outline_rounded,
+                      color: AppColors.textDark, size: 21),
                 ),
               ),
             ],
